@@ -35,33 +35,33 @@ fn stringify_buffer(buffer: &IBuffer) -> windows::core::Result<String> {
         .map_err(|_| -> Error { Error::new(E_FAIL, "Unable to convert".into()) });
 }
 
-pub fn decode(base64_string: &str) -> windows::core::Result<String> {
+pub fn decode(encoded: &str) -> windows::core::Result<String> {
     // Decoded the string from Base64 to binary.
-    let base64_string: HSTRING = base64_string.into();
-    let buffer = CryptographicBuffer::DecodeFromBase64String(base64_string)?;
+    let encoded: HSTRING = encoded.into();
+    let buffer = CryptographicBuffer::DecodeFromBase64String(encoded)?;
     return stringify_buffer(&buffer);
 }
 
-pub fn decode_as_mut8(base64_string: &str, dest: &mut [u8]) -> windows::core::Result<()> {
+pub fn decode_as_mut8(encoded: &str, dest: &mut [u8]) -> windows::core::Result<()> {
     // Decoded the string from Base64 to binary.
-    let base64_string: HSTRING = base64_string.into();
-    let buffer = CryptographicBuffer::DecodeFromBase64String(base64_string)?;
+    let encoded: HSTRING = encoded.into();
+    let buffer = CryptographicBuffer::DecodeFromBase64String(encoded)?;
     return mut8_buffer(&buffer, dest);
 }
 
-pub fn decode_as_vecu8(base64_string: &str) -> windows::core::Result<Vec<u8>> {
+pub fn decode_as_vecu8(encoded: &str) -> windows::core::Result<Vec<u8>> {
     // Decoded the string from Base64 to binary.
-    let base64_string: HSTRING = base64_string.into();
-    let buffer = CryptographicBuffer::DecodeFromBase64String(base64_string)?;
+    let encoded: HSTRING = encoded.into();
+    let buffer = CryptographicBuffer::DecodeFromBase64String(encoded)?;
     return vec8_buffer(&buffer);
 }
 
 pub fn encode(text: &str) -> windows::core::Result<String> {
     let text = text.as_bytes();
     let buffer: IBuffer = CryptographicBuffer::CreateFromByteArray(text)?;
-    let base64_string: HSTRING = CryptographicBuffer::EncodeToBase64String(&buffer)?;
-    let base64_string: String = base64_string.to_string();
-    Ok(base64_string)
+    let encoded: HSTRING = CryptographicBuffer::EncodeToBase64String(&buffer)?;
+    let encoded: String = encoded.to_string();
+    Ok(encoded)
 }
 
 #[cfg(test)]
@@ -83,11 +83,11 @@ mod tests {
 
     #[test]
     fn test_base64_encode_check_decode() -> windows::core::Result<()> {
-        let a = "hello world";
-        let b = "aGVsbG8gd29ybGQ=";
+        let text = "hello world";
+        let encoded_base64 = "aGVsbG8gd29ybGQ=";
 
-        assert_eq!(encode(a)?, b);
-        assert_eq!(a, &decode(b)?[..]);
+        assert_eq!(encode(text)?, encoded_base64);
+        assert_eq!(text, &decode(encoded_base64)?[..]);
         Ok(())
     }
 }
