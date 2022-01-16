@@ -1,0 +1,21 @@
+[package]
+name = "win-base64"
+version = "0.1.0"
+edition = "2021"
+authors = ["Pratik Chowdhury <pratikc@live.co.uk>"]
+license = "MIT"
+description = "Windows API Base64 Wrapper"
+readme = "README.md"
+homepage = "https://github.com/pratikpc/rust-win-base64"
+repository = "https://github.com/pratikpc/rust-win-base64"
+keywords = ["base64", "windows", "windows-api"]
+categories = ["os::windows-apis", "cryptography"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies.windows]
+version = "0.30.0"
+features = ["Security_Cryptography", "Storage_Streams", "Win32_Foundation"]
+
+[[example]]
+name="encode-decode-sample"
