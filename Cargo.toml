@@ -11,6 +11,10 @@ repository = "https://github.com/pratikpc/rust-win-base64"
 keywords = ["base64", "windows", "windows-api"]
 categories = ["os::windows-apis", "cryptography"]
 
+[package.metadata.docs.rs]
+default-target = "x86_64-pc-windows-msvc"
+targets = []
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies.windows]
