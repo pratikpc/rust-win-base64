@@ -98,6 +98,18 @@ pub fn decode_as_vecu8(encoded: &str) -> windows::core::Result<Vec<u8>> {
     return vec8_buffer(&buffer);
 }
 
+/// Returns the encoded base64 String
+///
+/// # Arguments
+///
+/// * `encoded` - A String slice that holds the string to encode
+///
+/// # Examples
+///
+/// ```
+/// use win_base64::{decode, encode};
+/// let encoded = encode("hello").unwrap();
+/// ```
 pub fn encode(text: &str) -> windows::core::Result<String> {
     let text = text.as_bytes();
     let buffer: IBuffer = CryptographicBuffer::CreateFromByteArray(text)?;
