@@ -72,12 +72,22 @@ mod tests {
     #[test]
     fn test_base64_encode_decode() -> windows::core::Result<()> {
         let text = "What's up?😊🥘🍲🚩🏁🚀👌😁👍😍❤️💕🎶";
-        let base64_string = encode(&text)?;
-        let decoded_text = decode(&base64_string)?;
+        let encoded_base64 = encode(&text)?;
+        let decoded_text = decode(&encoded_base64)?;
         // If it worked, text and decoded_text would be the same
         println!("Original: {}\nDecoded: {}", text, decoded_text);
         assert_eq!(text, decoded_text);
 
+        Ok(())
+    }
+
+    #[test]
+    fn test_base64_encode_check_decode() -> windows::core::Result<()> {
+        let a = "hello world";
+        let b = "aGVsbG8gd29ybGQ=";
+
+        assert_eq!(encode(a)?, b);
+        assert_eq!(a, &decode(b)?[..]);
         Ok(())
     }
 }
