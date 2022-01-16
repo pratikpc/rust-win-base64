@@ -35,6 +35,19 @@ fn stringify_buffer(buffer: &IBuffer) -> windows::core::Result<String> {
         .map_err(|_| -> Error { Error::new(E_FAIL, "Unable to convert".into()) });
 }
 
+/// Returns the decoded Base64 String
+///
+/// # Arguments
+///
+/// * `encoded` - A String slice that holds the encoded string
+///
+/// # Examples
+///
+/// ```
+/// use win_base64::{decode, encode};
+/// let encoded = encode("hello").unwrap();
+/// let decoded = decode(&encoded);
+/// ```
 pub fn decode(encoded: &str) -> windows::core::Result<String> {
     // Decoded the string from Base64 to binary.
     let encoded: HSTRING = encoded.into();
@@ -42,6 +55,22 @@ pub fn decode(encoded: &str) -> windows::core::Result<String> {
     return stringify_buffer(&buffer);
 }
 
+/// Decodes the Base64 String and returns as mut_u8
+/// 
+///
+/// # Arguments
+///
+/// * `encoded` - A String slice that holds the encoded string
+/// * `dest` - A mut u8 array where we can store the decoded result
+///
+/// # Examples
+///
+/// ```
+/// use win_base64::{decode_as_mut8, encode};
+/// let encoded = encode("hello").unwrap();
+/// let mut decoded = vec![0u8; 5];
+/// decode_as_mut8(&encoded, &mut decoded);
+/// ```
 pub fn decode_as_mut8(encoded: &str, dest: &mut [u8]) -> windows::core::Result<()> {
     // Decoded the string from Base64 to binary.
     let encoded: HSTRING = encoded.into();
@@ -49,6 +78,19 @@ pub fn decode_as_mut8(encoded: &str, dest: &mut [u8]) -> windows::core::Result<(
     return mut8_buffer(&buffer, dest);
 }
 
+/// Returns the decoded Base64 as a Vec<u8>
+///
+/// # Arguments
+///
+/// * `encoded` - A String slice that holds the encoded string
+///
+/// # Examples
+///
+/// ```
+/// use win_base64::{decode_as_vecu8, encode};
+/// let encoded = encode("hello").unwrap();
+/// let decoded = decode_as_vecu8(&encoded);
+/// ```
 pub fn decode_as_vecu8(encoded: &str) -> windows::core::Result<Vec<u8>> {
     // Decoded the string from Base64 to binary.
     let encoded: HSTRING = encoded.into();
