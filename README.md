@@ -27,6 +27,16 @@ println!("Decoded : {}", decoded_text);
 
 Yes this supports Emojis.
 
+### Similar code to [base64 library](https://crates.io/crates/base64)
+
+```rust
+let a = "hello world";
+let b = "aGVsbG8gd29ybGQ=";
+
+assert_eq!(encode(a)?, b);
+assert_eq!(a, &decode(b)?[..]);
+```
+
 ### Multiple Decodes
 
 1. Decode as `&mut [u8]` (`decode_as_mut8`)  
